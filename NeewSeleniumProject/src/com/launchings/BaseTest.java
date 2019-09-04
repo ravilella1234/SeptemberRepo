@@ -25,7 +25,7 @@ public class BaseTest
 	
 	public static void launch(String browser)
 	{
-		if(p.getProperty(browser).equals("chrome"))
+		if(p.getProperty(browser).equalsIgnoreCase("chrome"))
 		{
 			System.setProperty("webdriver.chrome.driver", projectPath+"//Drivers//chromedriver.exe");
 			driver=new ChromeDriver();
@@ -46,8 +46,8 @@ public class BaseTest
 	
 	public static void navigateUrl(String url) 
 	{
-		driver.get(p.getProperty(url));
+		//driver.get(p.getProperty(url));
+		driver.navigate().to(p.getProperty(url));
 	}
 	
-
 }
