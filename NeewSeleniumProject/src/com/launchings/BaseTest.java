@@ -8,6 +8,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.internal.ProfilesIni;
 
 public class BaseTest 
 {
@@ -32,8 +35,30 @@ public class BaseTest
 		}
 		else if(p.getProperty(browser).equals("firefox"))
 		{
+			//FirefoxDriver setup
 			System.setProperty("webdriver.gecko.driver", projectPath+"//Drivers//geckodriver.exe");
-			driver=new FirefoxDriver();
+			
+			//clearing execution logs
+			System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "E:\\exelogs.txt");
+			
+			FirefoxOptions option=new FirefoxOptions();
+			
+			//Creating the New Profile Object
+			ProfilesIni p=new ProfilesIni();
+			FirefoxProfile profile = p.getProfile("default");
+			
+			//notifications
+			profile.setPreference("dom.webnotifications.enabled", false);
+			
+			//proxy servers
+			/*profile.setPreference("network.proxy.type", 1);
+			profile.setPreference("network.proxy.socks", "192.168.90.54");
+			profile.setPreference("network.proxy.socks_port", 1744);*/
+			
+			
+			option.setProfile(profile);
+			
+			driver=new FirefoxDriver(option);
 		}
 		else if(p.getProperty(browser).equals("edge"))
 		{
