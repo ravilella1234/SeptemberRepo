@@ -12,3 +12,11 @@ Navigated to URL : https://www.amazon.in
 Selected the item Books by using the locator : searchDropdownBox
 Entered the text Harry Potter by using the locator : twotabsearchtextbox
 Clicked on Amazon Search Button by using locator : //div[@class='nav-search-submit nav-sprite']//input[@class='nav-input']
+Initializing the properties files........
+Launched the Browser : CHROME
+Navigated to URL : https://www.amazon.in
+Selected the item Books by using the locator : searchDropdownBox
+Entered the text Harry Potter by using the locator : twotabsearchtextbox
+Clicked on Amazon Search Button by using locator : //div[@class='nav-search-submit nav-sprite']//input[@class='nav-input']
+Initializing the properties files........
+Launched the Browser : CHROME
