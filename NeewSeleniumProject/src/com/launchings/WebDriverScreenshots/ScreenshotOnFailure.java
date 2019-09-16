@@ -19,7 +19,7 @@ import org.openqa.selenium.io.FileHandler;
 public class ScreenshotOnFailure 
 {
 
-	public static void main(String[] args) throws IOException 
+	public static void main(String[] args) throws IOException, InterruptedException 
 	{
 		WebDriver driver;
 		System.setProperty("webdriver.chrome.driver", "C:\\Users\\DELL\\Desktop\\Drivers\\chromedriver.exe");
@@ -51,8 +51,9 @@ public class ScreenshotOnFailure
 					   FileHandler.copy(srcFile,new File(System.getProperty("user.dir")+"//Screenshots//" +linkname+ "_" +dateFormat.format(dt)+".png"));
 				   }
 				   
+				   //Thread.sleep(3000);
 				   //driver.navigate().back();
-				   links=driver.findElements(By.tagName("a"));
+				  links=driver.findElements(By.tagName("a"));
 			    }
 			}
 	}
