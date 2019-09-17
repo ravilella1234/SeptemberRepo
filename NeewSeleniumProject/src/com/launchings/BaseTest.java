@@ -1,10 +1,15 @@
 package com.launchings;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Date;
 import java.util.Properties;
 
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -14,9 +19,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
+import org.openqa.selenium.io.FileHandler;
 
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 
 public class BaseTest 
 {
@@ -147,6 +154,56 @@ public class BaseTest
 		getElement(locatorKey).click();
 		//driver.findElement(By.xpath(or.getProperty(locatorKey))).click();
 		
+	}
+	
+	//************************* Verification Methods *********************
+	
+	public static boolean verifyTitle(String expectedTitle) 
+	{
+		String actualTitle = driver.getTitle();
+		if(actualTitle.equals(or.getProperty(expectedTitle)))
+			return true;
+		else
+			return false;
+	}
+	
+	public static boolean verifyElement(String locatorKey, String expectedElement) 
+	{
+		String actualElement = driver.findElement(By.linkText(or.getProperty(locatorKey))).getText();
+		if(actualElement.equals(or.getProperty(expectedElement)))
+			return true;
+		else
+			return false;
+		
+	}
+
+	//************************* Reporting Methods *********************
+	
+	public static void passReport(String passMessage) 
+	{
+		test.log(LogStatus.PASS, passMessage);
+	}
+
+	public static void failureReport(String failMessage) 
+	{
+		test.log(LogStatus.FAIL, failMessage);
+		takeScreenShot();
+	}
+	
+	public static void takeScreenShot() 
+	{
+		Date dt=new Date();
+		String screenshotFileName = dt.toString().replace(":", "_").replace(" ", "_")+".png";
+		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		try 
+		{
+			FileHandler.copy(scrFile, new File(projectPath+"//failure//"+screenshotFileName));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		//put screen shot file in extent reports
+		test.log(LogStatus.INFO, "Screenshot --> "+ test.addScreenCapture(projectPath+"//failure//"+screenshotFileName));
 	}
 	
 }
